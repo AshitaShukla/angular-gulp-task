@@ -1,0 +1,71 @@
+<div>
+    <section id="todoapp">
+        <header id="header">
+            <ng-form name="myForm">
+                <input style="width: 100%;background:#8b848496;" id="new-todo" placeholder="Search Contact " ng-model="searchQuery" ng-disabled="saving"
+                    autofocus>
+                <div style="position: absolute;left: 0;bottom: 100%;
+                border-bottom: 1px solid #ddd;
+                    width: 100%;
+                    background: #fff;">
+                    <div style="display: inline-flex;width: 100%;">
+                        <div style="width: 80%;    margin-top: 3%;
+                       margin-left: 3%;">Fill the inputs to add contact and click Add</div>
+
+                        <button style="cursor: pointer;border: 1px solid #eee;
+                        padding: 0 16px;" ng-disabled="myForm.$invalid" ng-click="addTodo()">
+                            <h4>Add >></h4>
+                        </button>
+
+
+                    </div>
+                    <input ng-required="true" class="add-todo" type="text" placeholder="Firstname"
+                        data-ng-model="newUser.firstName">
+                    <input ng-required="true" class="add-todo" type="text" placeholder="Lastname"
+                        data-ng-model="newUser.lastName">
+                    <input ng-required="true" name="phone" class="add-todo" type="text" ng-pattern="phoneNumbr"
+                        placeholder="Contact" data-ng-model="newUser.phone">
+
+                    <span class="error" ng-show="myForm.phone.$error.required">Required!</span>
+                    <span class="error" ng-show="myForm.phone.$error.minlength">Phone no not less that 10 char.</span>
+                    <span class="error" ng-show="myForm.phone.$error.maxlength">Phone no not more than 11 char.</span>
+                    <br><span class="error" ng-show="myForm.phone.$error.pattern">Please match pattern [+91-036-78658 ||
+                        91-036-78658]</span>
+                </div>
+            </ng-form>
+        </header>
+        <section id="main" ng-show="todos.length" ng-cloak>
+            <div>
+                <!-- <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
+            <label for="toggle-all">Mark all as complete</label> -->
+
+                <ul id="todo-list" style="max-height:300px;height:300px;overflow:auto;">
+                    <li ng-repeat="todo in todos | filter: searchQuery"
+                        ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+
+                        <div class="view">
+                            <input class="toggle" type="checkbox" ng-model="todo.completed"
+                                ng-change="toggleCompleted(todo)">
+                            <div style="display: inline-flex;">
+                                <label ng-dblclick="editTodo(todo)">{{todo.firstName}}</label>
+                                <label>{{todo.phone}}</label>
+
+                            </div>
+                            <button class="destroy" ng-click="removeTodo(todo)"></button>
+                        </div>
+                        <form ng-submit="saveEdits(todo, 'submit')">
+                            <input class="edit" ng-trim="false" ng-model="todo.firstName"
+                                todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')"
+                                todo-focus="todo == editedTodo">
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+
+    </section>
+    <footer id="info">
+        <p>Double-click to edit a todo</p>
+    </footer>
+</div>
